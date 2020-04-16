@@ -1,0 +1,57 @@
+body {
+  text-align: center;
+  margin: auto;
+  font-family: 'DM Serif Display', serif;
+  background-image: url("images/Flowers.png");
+  background-color: #ecf0f1;
+  color: black;
+  transition: background-image 0.5s ease;
+}
+
+body.dark-mode {
+  background-image: url("images/Flowers-darkmode.png");
+  background-color: #130f40;
+  color: white;
+}
+
+body.dark-mode h1 {
+  color: white;
+  text-shadow: 0px 0px 20px black;
+}
+
+body.dark-mode label {
+  color: white !important;
+}
+
+body.dark-mode .MuiInput-underline:before {
+  border-bottom: 1px solid rgb(255, 255, 255) !important;
+}
+
+body.dark-mode .MuiIconButton-root {
+  color: white;
+}
+
+body.dark-mode .MuiSvgIcon-root {
+  color: white;
+}
+
+body.dark-mode ul {
+  background-color: #3d4f58 !important;
+  color: white;
+}
+
+body.dark-mode div {
+  color: white !important;
+}
+
+body.dark-mode input {
+  color: white !important;
+}
+
+h1 {
+  font-size: 64px;
+}
+
+.dark-mode {
+  color: #ffffff;
+}
