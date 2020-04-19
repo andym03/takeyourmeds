@@ -2,11 +2,14 @@
 /* eslint-disable no-plusplus */
 require('dotenv').config();
 const express = require('express');
-const os = require('os');
+const url = require('url');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+const fs = require('fs');
 
 const options = {
   keepAlive: true,
@@ -28,7 +31,7 @@ async function newAddEmailToDB(document) {
   if (result) {
     console.log(`Added '${JSON.stringify(document)}':`);
   } else {
-    console.log('Failed to add to the DB');
+    throw new Error('Failed to add to the DB');
   }
 }
 
@@ -40,8 +43,6 @@ weekday[3] = 'wednesday';
 weekday[4] = 'thursday';
 weekday[5] = 'friday';
 weekday[6] = 'saturday';
-
-const FIVE_MIN = 5 * 60 * 1000;
 
 const newBuildTodaysEmailList = async () => {
   const today = new Date().getDay();
@@ -85,7 +86,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (emailAddresses) => {
-  console.log(emailAddresses);
+  console.log(`Sending to ${emailAddresses}`);
   if (emailAddresses.length > 0) {
   // send mail with defined transport object
     const info = await transporter.sendMail({
@@ -100,24 +101,24 @@ const sendMail = async (emailAddresses) => {
   return 'failed';
 };
 
-const app = express();
-
-app.use(cors());
-app.use(express.static('dist'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-const addToDB = async (document) => {
-  try {
-    client.connect(() => {
-      client.db('takeyourmeds').collection('notifications')
-        .insertOne(document);
-      client.close();
+const sendConfirmationEmail = async (document) => {
+  console.log('Sending confirmation Email');
+  fs.readFile('./src/server/emails/confirmation.html', 'utf8', async (err, data) => {
+    if (err) throw err;
+    console.log('Attempt to send confirmation Email');
+    const info = await transporter.sendMail({
+      from: '"Take Your Meds 💊" <takeyourmeds.bit@gmail.com>', // sender address
+      to: document.email.toString(), // list of receivers
+      subject: 'Confirm your email address', // Subject line
+      text: 'Please confirm your email address', // plain text body
+      html: data.replace(
+        'http://localhost:3000',
+        `http://localhost:3000/verifyEmail?token=${document.confirmationToken}`
+      ), // html body
     });
-    console.log(`Added ${document} to email list`);
-  } catch (error) {
-    console.log(error);
-  }
+    console.log('Sent');
+  });
+  console.log(document.email.toString());
 };
 
 // Run every minute
@@ -141,38 +142,35 @@ const sendEmails = async (todaysEmails) => {
   }
 };
 
-const buildTodaysEmailList = async () => {
-  const today = new Date().getDay();
+const app = express();
+
+app.use(cors());
+app.use(express.static('dist'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get('/api/verifyEmail', async (req, res) => {
+  console.log("Trying to verify email!")
   try {
-    console.log('ATTEMPT QUERY FOR EMAILS ');
-    await client.connect(async () => {
-      const collection = client.db('takeyourmeds').collection('notifications');
-      // perform actions on the collection object
-      collection
-        .find({
-          emailConfirmed: true,
-          $or: [{ frequency: 'Daily' }, { frequency: weekday[today] }]
-        })
-        .project({
-          email: 1, notificationTime: 1
-        })
-        .toArray(async (err, items) => {
-          if (err) {
-            console.log(`WE HIT ERROR${err}`);
-            throw err;
-          }
-          console.log('Please try and send mail');
-          await sendEmails(items);
-          client.close();
-        });
-    });
+    console.log(req.query.token);
+    const decodedToken = jwt.verify(req.query.token, process.env.SECRET);
+    await client.db('takeyourmeds')
+      .collection('notifications')
+      .findOneAndUpdate(
+        { email: decodedToken.email },
+        {
+          $set: { emailConfirmed: true }
+        }
+      );
+    res.sendStatus(200);
+    console.log("Confirmed Email");
   } catch (error) {
-    console.log(error);
+    res.status(404);
   }
-};
+});
 
 app.post('/api/setMedReminder', async (req, res) => {
-  const docToInsert = {
+  const newUser = {
     email: req.body.email,
     medicationName: req.body.medicationName,
     frequency: req.body.frequency,
@@ -180,14 +178,27 @@ app.post('/api/setMedReminder', async (req, res) => {
     emailConfirmed: false,
 
   };
-  newAddEmailToDB(docToInsert);
-  res.end('yes');
+
+  let newUserHash = {};
+  newUserHash.user = newUser;
+  newUserHash.expiry = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Tomorrow
+  const token = jwt.sign(newUserHash, process.env.SECRET);
+
+  const docToInsert = {
+    ...newUser,
+    confirmationToken: token,
+  };
+  try {
+    newAddEmailToDB(docToInsert);
+    sendConfirmationEmail(docToInsert);
+    res.end('yes');
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 });
 
-app.post('/api/setMedReminder', (req, res) => res.send({ username: os.userInfo().username }));
-
 app.listen(process.env.PORT || 8081, () => console.log(`Listening on port ${process.env.PORT || 8081}!`));
-
 
 const minutes = 1;
 const theInterval = minutes * 60 * 1000;

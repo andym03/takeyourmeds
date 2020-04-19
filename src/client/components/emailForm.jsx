@@ -74,7 +74,7 @@ export default class EmailForm extends React.Component {
 
   sendData() {
     console.log(this.state);
-    const url = 'http://localhost:8081/api/setMedReminder'; // site that doesn’t send Access-Control-*
+    const url = 'http://localhost:8081/api/setMedReminder';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -88,7 +88,7 @@ export default class EmailForm extends React.Component {
         frequency: this.state.frequency,
         emailConfirmed: false,
       })
-    })
+    });
   }
 
   async handleSubmit(event) {
@@ -108,8 +108,6 @@ export default class EmailForm extends React.Component {
       this.sendData();
     }
   }
-
- 
 
   render() {
     return (
