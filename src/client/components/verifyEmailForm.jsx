@@ -82,7 +82,6 @@ export default class VerifyEmail extends React.Component {
         <div className="formContainer">
           <h1> Welcome to the club</h1>
           <h3>Verified!</h3>
-          <div id="loading" />
           <Button
             variant="contained"
             type="submit"
