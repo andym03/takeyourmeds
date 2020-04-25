@@ -90,7 +90,7 @@ const sendMail = async (emailAddresses) => {
   if (emailAddresses.length > 0) {
   // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: '"Take Your Meds 💊" <takeyourmeds.bit@gmail.com>', // sender address
+      from: '"Take Your Meds 🌺" <takeyourmeds.bit@gmail.com>', // sender address
       to: emailAddresses.toString(), // list of receivers
       subject: 'Take Your Meds', // Subject line
       text: "Hey friend! It's time to take your meds 😊", // plain text body
@@ -107,7 +107,7 @@ const sendConfirmationEmail = async (document) => {
     if (err) throw err;
     console.log('Attempt to send confirmation Email');
     const info = await transporter.sendMail({
-      from: '"Take Your Meds 💊" <takeyourmeds.bit@gmail.com>', // sender address
+      from: '"Take Your Meds 🌺" <takeyourmeds.bit@gmail.com>', // sender address
       to: document.email.toString(), // list of receivers
       subject: 'Confirm your email address', // Subject line
       text: 'Please confirm your email address', // plain text body

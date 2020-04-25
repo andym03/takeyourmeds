@@ -1,0 +1,24 @@
+.medsLogo {
+  margin-right: auto;
+  margin-left:10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 22px;
+  color: black;
+}
+
+body.dark-mode .medsLogo {
+  color: white;
+}
+
+body.dark-mode .makeStyles-drawerHeader-6 {
+  background-color: "#1e272e";
+}
+
+body.dark-mode .MuiList-padding {
+  background-color: #2f3542 !important;
+}
+
+body.dark-mode .drawerPaperClass {
+  background-color: '#2f3542';
+}

@@ -9,7 +9,7 @@ body {
 }
 
 body.dark-mode {
-  background-image: url("images/Flowers-darkmode-alt.png");
+  background-image: url("images/Flowers-darkmode.png");
   background-color: #130f40;
   color: white;
 }
@@ -35,10 +35,10 @@ body.dark-mode .MuiSvgIcon-root {
   color: white;
 }
 
-body.dark-mode ul {
+/* body.dark-mode ul {
   background-color: #3d4f58 !important;
   color: white;
-}
+} */
 
 body.dark-mode div {
   color: white !important;
@@ -54,4 +54,33 @@ h1 {
 
 .dark-mode {
   color: #ffffff;
+}
+
+body.dark-mode .MuiMenuItem-root {
+  background-color: #34495e;
+}
+
+body.dark-mode .MuiList-padding {
+  background-color: #34495e;
+}
+
+body.dark-mode .MuiPaper-root {
+  background-color: #2f3640;
+}
+
+body.dark-mode .MuiPickersClockNumber-clockNumber {
+  color: white;
+}
+
+.MuiDivider-root {
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+}
+
+a {
+  color: black;
+}
+
+body.dark-mode a{
+ color: white;
 }

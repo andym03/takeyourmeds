@@ -4,7 +4,9 @@ import React from 'react';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
-import { MuiThemeProvider, makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import {
+  makeStyles, createMuiTheme, withStyles, ThemeProvider
+} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
@@ -13,13 +15,27 @@ import DayPicker from './dayPicker';
 
 import './emailForm.css';
 
+
+const theme = createMuiTheme({
+  overrides: {
+    // Style sheet name ⚛️
+    MuiButton: {
+      // Name of the rule
+      text: {
+        // Some CSS
+        backgroundColor: '#e84393',
+        borderRadius: 3,
+        border: 0,
+        color: 'white',
+        height: 48,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      },
+    },
+  },
+});
+
 export default class EmailForm extends React.Component {
 
-  theme = createMuiTheme({
-    palette: {
-      primary: { main: '#2ecc71', contrastText: '#ffffff' }
-    },
-  });
 
   useStyles = makeStyles(theme => ({
     root: {
@@ -29,6 +45,12 @@ export default class EmailForm extends React.Component {
       },
     },
   }));
+
+  StyledButton = withStyles({
+    root: {
+      backgroundColor: '#34495e',
+    },
+  })(MenuItem);
 
   constructor(props) {
     super(props);
@@ -130,27 +152,26 @@ export default class EmailForm extends React.Component {
             <MenuItem value="Custom"><span>Custom&nbsp;&nbsp;</span><span className="MuiIconButton-label"><svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span></MenuItem>
           </Select>
           
-          <MuiThemeProvider theme={this.theme}>
-            { this.state.showAdvancedSettings && <DayPicker ref={this.dayPickerRef} /> }
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardTimePicker
-                margin="normal"
-                id="time-picker"
-                value={this.state.selectedTime}
-                onChange={this.handleChange}
-                label=" Notification Time"
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-                className="form-input"
-                minutesStep={5}
-                name="selectedTime"
-              />
-            </MuiPickersUtilsProvider>
-            <Button variant="contained" type="submit" color="primary" className="submit-button">
-              Submit
-            </Button>
-          </MuiThemeProvider>
+          
+          { this.state.showAdvancedSettings && <DayPicker ref={this.dayPickerRef} /> }
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              value={this.state.selectedTime}
+              onChange={this.handleChange}
+              label=" Notification Time"
+              KeyboardButtonProps={{
+                'aria-label': 'change time',
+              }}
+              className="form-input"
+              minutesStep={5}
+              name="selectedTime"
+            />
+          </MuiPickersUtilsProvider>
+          <ThemeProvider theme={theme}>
+            <Button type="submit" className="submit-button">Submit</Button>
+          </ThemeProvider>
         </form>
       </div>
     );
