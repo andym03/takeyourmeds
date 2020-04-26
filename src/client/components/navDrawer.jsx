@@ -113,7 +113,7 @@ export default function NavDrawer() {
           <Link to="/">
             <h4 className="medsLogo">Take Your Meds</h4>
           </Link>
-          <IconButton>
+          <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
@@ -129,47 +129,57 @@ export default function NavDrawer() {
               <ListItemText primary="About us" />
             </ListItem>
           </Link>
-          <ListItem
-            button
-            key="Email-Settings"
-            className={classes.listButtonStyles}
-          >
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
-          <ListItem
-            button
-            key="Donate"
-            className={classes.listButtonStyles}
-          >
-            <ListItemIcon><CreditCardIcon /></ListItemIcon>
-            <ListItemText primary="Donate" />
-          </ListItem>
+          <Link to="/settings">
+            <ListItem
+              button
+              key="Email-Settings"
+              className={classes.listButtonStyles}
+            >
+              <ListItemIcon><SettingsIcon /></ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItem>
+          </Link>
+          <a href="https://paypal.me/andrewmcmenemy03">
+            <ListItem
+              button
+              key="Donate"
+              className={classes.listButtonStyles}
+            >
+              <ListItemIcon><CreditCardIcon /></ListItemIcon>
+              <ListItemText primary="Donate" />
+            </ListItem>
+          </a>
           <Divider />
-          <ListItem
-            button
-            key="Youtube"
-            className={classes.listButtonStyles}
-          >
-            <ListItemIcon><YouTubeIcon /></ListItemIcon>
-            <ListItemText primary="Wholesome Memes" />
-          </ListItem>
-          <ListItem
-            button
-            key="Animal Crossing"
-            className={classes.listButtonStyles}
-          >
-            <ListItemIcon><PetsIcon /></ListItemIcon>
-            <ListItemText primary="Animal Crossing" />
-          </ListItem>
-          <ListItem
-            button
-            key="Github"
-            className={classes.listButtonStyles}
-          >
-            <ListItemIcon><GitHubIcon /></ListItemIcon>
-            <ListItemText primary="Source Code" />
-          </ListItem>
+          <Link to="/memes">
+            <ListItem
+              button
+              key="Youtube"
+              className={classes.listButtonStyles}
+            >
+              <ListItemIcon><YouTubeIcon /></ListItemIcon>
+              <ListItemText primary="Wholesome Memes" />
+            </ListItem>
+          </Link>
+          <Link to="/animal_crossing">
+            <ListItem
+              button
+              key="Animal Crossing"
+              className={classes.listButtonStyles}
+            >
+              <ListItemIcon><PetsIcon /></ListItemIcon>
+              <ListItemText primary="Animal Crossing" />
+            </ListItem>
+          </Link>
+          <a href="https://github.com/andym03/takeyourmeds">
+            <ListItem
+              button
+              key="Github"
+              className={classes.listButtonStyles}
+            >
+              <ListItemIcon><GitHubIcon /></ListItemIcon>
+              <ListItemText primary="Source Code" />
+            </ListItem>
+          </a>
         </List>
         <Divider />
       </Drawer>

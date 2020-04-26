@@ -2,6 +2,7 @@
 /* eslint-disable no-plusplus */
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const url = require('url');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -81,7 +82,7 @@ const transporter = nodemailer.createTransport({
   secure: false, // true for 465, false for other ports
   auth: {
     user: 'takeyourmeds.bit@gmail.com', // generated ethereal user
-    pass: 'Winston22!!22' // generated ethereal password
+    pass: process.env.EMAIL_PASS // generated ethereal password
   }
 });
 
@@ -144,6 +145,7 @@ const sendEmails = async (todaysEmails) => {
 
 const app = express();
 
+app.use(cookieParser());
 app.use(cors());
 app.use(express.static('dist'));
 app.use(bodyParser.urlencoded({ extended: false }));

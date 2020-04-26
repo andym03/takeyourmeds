@@ -2,16 +2,34 @@ body {
   text-align: center;
   margin: auto;
   font-family: 'DM Serif Display', serif;
-  background-image: url("images/Flowers.png");
   background-color: #ecf0f1;
   color: black;
   transition: background-image 0.5s ease;
 }
 
-body.dark-mode {
-  background-image: url("images/Flowers-darkmode.png");
-  background-color: #130f40;
+body.flowers {
+  background-image: url("images/Flowers.png");
+}
+
+body.flowers .MuiIconButton-label {
+  color: black;
+}
+
+body.flowers.dark-mode .MuiIconButton-label {
   color: white;
+}
+
+.MuiIconButton-label {
+  color: white;
+}
+
+body.dark-mode {
+  background-color: #222f3e;
+  color: white;
+}
+
+body.dark-mode.flowers {
+  background-image: url("images/Flowers-darkmode.png");
 }
 
 body.dark-mode h1 {
@@ -32,6 +50,14 @@ body.dark-mode .MuiIconButton-root {
 }
 
 body.dark-mode .MuiSvgIcon-root {
+  color: white;
+}
+
+body .makeStyles-drawerHeader-6 .MuiSvgIcon-root {
+  color: black;
+}
+
+body.dark-mode .makeStyles-drawerHeader-6 .MuiSvgIcon-root {
   color: white;
 }
 

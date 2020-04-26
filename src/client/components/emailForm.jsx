@@ -24,6 +24,9 @@ const theme = createMuiTheme({
       text: {
         // Some CSS
         backgroundColor: '#e84393',
+        '&:hover': {
+          background: "#ca1c70",
+        },
         borderRadius: 3,
         border: 0,
         color: 'white',

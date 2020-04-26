@@ -1,0 +1,109 @@
+.blogBody{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 40%;
+  background-color: #f5f6fa;
+  padding: 45px;
+  box-shadow: 0px 0px 10px lightgray;
+}
+
+body.dark-mode .blogBody {
+  box-shadow: 0px 0px 10px black;
+  background-color: #2f3640;
+}
+
+/* body.dark-mode .blogImage {
+  content: url("../images/Flowers-righthand-corner-darkmode.png");
+} */
+
+.fakeJumbotron {
+  background-color: #f5f6fa;
+  margin: -45px;
+  margin-bottom:45px;
+  padding: 45px;
+  color: black;
+  
+}
+
+.fakeJumbotron p {
+  color: black;
+}
+
+.fakeJumbotron .blogHeader h1 {
+  color: black;
+  text-shadow: none;
+}
+
+.blogIntroText {
+  font-size: 20px;
+  margin-top: 60px;
+}
+
+.blogBody p {
+  font-family: 'Playfair Display', serif;
+}
+
+.blogHeader h1 {
+  margin-bottom: 20px;
+}
+
+.blogImage {
+  float: right;
+  width: 300px;
+  margin-right: -45px;
+  margin-top: -45px;
+}
+
+.avatar {
+  width: 50px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px lightgray;
+}
+
+.blogAuthorBlock {
+  display: inline-flex;
+  
+}
+
+.blogAuthorBlock p {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: gray;
+  margin-left: 20px;
+}
+
+.blogText {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.discord-block {
+  display: inline-flex;
+  margin-top: -15px;
+}
+
+.discord-block a {
+  display: inline-flex;
+}
+
+.discord {
+  width: 50px;
+}
+
+body.dark-mode .discord {
+  filter: brightness(0) saturate(100%) invert(96%) sepia(100%) saturate(0%) hue-rotate(229deg) brightness(104%) contrast(102%);
+}
+
+body .discord {
+  filter: brightness(0) saturate(100%) invert(46%) sepia(9%) saturate(2640%) hue-rotate(189deg) brightness(116%) contrast(83%);
+}
+
+.left-align-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  width: 60%;
+  margin-bottom: 40px;
+}
